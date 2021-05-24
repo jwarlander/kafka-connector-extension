@@ -51,6 +51,14 @@ class KafkaConsumerProperties(private val properties: Map[String, String])
     isEnabled(AS_JSON_DOC)
 
   /**
+   * Returns user provided boolean,
+   * if it is not provided by user
+   * returns default value of false.
+   */
+  final def getKafkaTimestamp(): Boolean =
+    isEnabled(KAFKA_TIMESTAMP)
+
+  /**
    * Returns the type we expect on the Kafka.
    * It is one of ['json', 'avro'] whereas 'avro' is the default.
    */
@@ -389,6 +397,13 @@ object KafkaConsumerProperties extends CommonProperties {
    * or as avro message when [[AS_JSON_DOC]] is 'false' or not set
    */
   private[kafka] final val AS_JSON_DOC: String = "AS_JSON_DOC"
+
+  /**
+   *
+   * It is a boolean that defines whether the embedded Kafka timestamp
+   * in each message should be extracted as into an additional column
+   */
+  private[kafka] final val KAFKA_TIMESTAMP: String = "KAFKA_TIMESTAMP"
 
   /**
    * The fields and field order to include when inserting into the target table.
